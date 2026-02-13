@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Un detalle especial ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #ff9a9e, #fecfef);
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer; /* Para indicar que se puede hacer clic */
+        }
+
+        .contenedor {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+            width: 90%;
+        }
+
+        /* Estilo Manuscrito para el Nombre */
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            color: #d63384;
+            font-size: 4rem; /* Tamaño grande */
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+            animation: latidoTexto 2s infinite;
+        }
+
+        h2 {
+            color: #555;
+            font-weight: 300;
+            font-size: 1.2rem;
+            margin-top: 10px;
+            background-color: rgba(255,255,255,0.6);
+            padding: 10px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        /* Botón estilo "Glassmorphism" (Cristal) */
+        .boton {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            border: 2px solid white;
+            color: #d63384;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.5em;
+            cursor: pointer;
+            margin-top: 30px;
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'Great Vibes', cursive;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .boton:hover {
+            background: white;
+            transform: scale(1.1);
+        }
+
+        /* Animación suave del nombre */
+        @keyframes latidoTexto {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Corazones flotantes (Fondo) */
+        .corazon {
+            position: absolute;
+            bottom: -50px;
+            user-select: none;
+            pointer-events: none; /* Para que no estorben el click */
+            animation: flotar linear forwards; 
+        }
+
+        /* Corazones de la explosión */
+        .particula {
+            position: absolute;
+            pointer-events: none;
+            animation: explosion 1s ease-out forwards;
+        }
+
+        @keyframes flotar {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes explosion {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
+        }
+    </style>
+</head>
+<body onclick="crearExplosion(event); reproducirMusica()">
+
+    <audio id="musica" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/23/audio_07b2a04be3.mp3?filename=piano-moment-9835.mp3" type="audio/mp3">
+    </audio>
+
+    <div class="contenedor">
+        <h2>Un regalo especial para...</h2>
+        <h1>Tlacuachita</h1>
+        
+        <br>
+        <p style="color: #777; font-size: 0.9em;">(Toca la pantalla para ver magia ✨)</p>
+        
+        <a href="#" class="boton" onclick="alert('Te amo mucho ❤️')">¿Me aceptas?</a>
+    </div>
+
+    <script>
+        // 1. LLUVIA DE CORAZONES (CON PROFUNDIDAD)
+        function crearCorazonFondo() {
+            const corazon = document.createElement('div');
+            corazon.classList.add('corazon');
+            corazon.innerHTML = Math.random() < 0.5 ? '❤️' : '💖'; // Mezcla dos tipos de corazones
+            
+            corazon.style.left = Math.random() * 100 + 'vw';
+            
+            // Profundidad: Tamaño aleatorio entre 10px y 60px
+            let tamano = Math.random() * 50 + 10; 
+            corazon.style.fontSize = tamano + 'px';
+            
+            // Velocidad: Los más grandes suben más rápido (efecto visual)
+            let duracion = Math.random() * 3 + 3;
+            corazon.style.animationDuration = duracion + 's';
+            
+            // Transparencia: Los pequeños se ven más lejos (más transparentes)
+            if (tamano < 20) {
+                corazon.style.opacity = 0.5;
+                corazon.style.filter = "blur(1px)";
+            } else {
+                corazon.style.opacity = 0.9;
+            }
+
+            document.body.appendChild(corazon);
+            setTimeout(() => { corazon.remove(); }, 6000);
+        }
+        setInterval(crearCorazonFondo, 150); // Más cantidad de corazones
+
+        // 2. EXPLOSIÓN AL HACER CLIC
+        function crearExplosion(e) {
+            const cantidad = 15; // Número de corazones por explosión
+            for (let i = 0; i < cantidad; i++) {
+                const particula = document.createElement('div');
+                particula.classList.add('particula');
+                particula.innerHTML = '💘';
+                particula.style.fontSize = '30px';
+                particula.style.left = e.clientX + 'px';
+                particula.style.top = e.clientY + 'px';
+                
+                // Dirección aleatoria para la explosión
+                const x = (Math.random() - 0.5) * 200 + 'px';
+                const y = (Math.random() - 0.5) * 200 + 'px';
+                particula.style.setProperty('--x', x);
+                particula.style.setProperty('--y', y);
+
+                document.body.appendChild(particula);
+                setTimeout(() => { particula.remove(); }, 1000);
+            }
+        }
+
+        // 3. MÚSICA (Truco para móviles)
+        let musicaSonando = false;
+        function reproducirMusica() {
+            if (!musicaSonando) {
+                const audio = document.getElementById('musica');
+                audio.volume = 0.5; // Volumen al 50%
+                audio.play().catch(error => {
+                    console.log("Esperando interacción del usuario para reproducir audio");
+                });
+                musicaSonando = true;
+            }
+        }
+    </script>
+</body>
+</html>
