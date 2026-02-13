@@ -3,18 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Un detalle especial ❤️</title>
+    <title>Para ti ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; padding: 0; background: linear-gradient(to bottom, #ff9a9e, #fecfef); height: 100vh; overflow: hidden; font-family: 'Montserrat', sans-serif; cursor: pointer; }
-        .contenedor { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 10; width: 90%; }
-        h1 { font-family: 'Great Vibes', cursive; color: #d63384; font-size: 4rem; margin: 0; text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8); animation: latidoTexto 2s infinite; }
-        h2 { color: #555; font-weight: 300; font-size: 1.2rem; margin-top: 10px; background-color: rgba(255,255,255,0.6); padding: 10px; border-radius: 20px; display: inline-block; }
-        .boton { background: rgba(255, 255, 255, 0.3); backdrop-filter: blur(5px); border: 2px solid white; color: #d63384; padding: 15px 40px; border-radius: 50px; font-size: 1.5em; cursor: pointer; margin-top: 30px; text-decoration: none; display: inline-block; font-family: 'Great Vibes', cursive; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .boton:hover { background: white; transform: scale(1.1); }
+        body { 
+            margin: 0; padding: 0; 
+            background: linear-gradient(to bottom, #ff9a9e, #fecfef); 
+            height: 100vh; overflow: hidden; 
+            font-family: 'Montserrat', sans-serif; 
+            cursor: pointer; 
+        }
+
+        /* ESTO ASEGURA QUE EL TEXTO SE VEA SIEMPRE AL FRENTE */
+        .contenedor {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 9999 !important; /* Prioridad máxima */
+            width: 90%;
+            background: rgba(255, 255, 255, 0.3); /* Fondo semitransparente para que se lea mejor */
+            padding: 20px;
+            border-radius: 20px;
+            backdrop-filter: blur(2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            color: #d63384;
+            font-size: 3.5rem;
+            margin: 10px 0;
+            text-shadow: 2px 2px 0px white;
+            animation: latidoTexto 2s infinite;
+        }
+
+        h2 {
+            color: #444; font-size: 1.1rem; margin-bottom: 5px;
+            background: white; display: inline-block;
+            padding: 5px 15px; border-radius: 15px;
+        }
+
+        .boton {
+            background: #fff; color: #d63384; border: 2px solid #d63384;
+            padding: 12px 30px; border-radius: 50px; font-size: 1.2rem;
+            text-decoration: none; display: inline-block; font-weight: bold;
+            margin-top: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
         @keyframes latidoTexto { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-        .corazon { position: absolute; bottom: -50px; user-select: none; pointer-events: none; animation: flotar linear forwards; }
-        .particula { position: absolute; pointer-events: none; animation: explosion 1s ease-out forwards; }
+        
+        .corazon { position: absolute; bottom: -50px; pointer-events: none; animation: flotar linear forwards; z-index: 1; }
+        .particula { position: absolute; pointer-events: none; animation: explosion 1s ease-out forwards; z-index: 9999; }
+        
         @keyframes flotar { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; } }
         @keyframes explosion { 0% { transform: translate(0, 0) scale(1); opacity: 1; } 100% { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; } }
     </style>
@@ -28,54 +69,27 @@
     <div class="contenedor">
         <h2>Un regalo especial para...</h2>
         <h1>MI PASTELITO</h1>
-        <br>
-        <p style="color: #777; font-size: 0.9em;">(Toca la pantalla para que suene la música 🎶)</p>
-        <a href="#" class="boton" onclick="alert('Te amo mucho ❤️')">¿Me aceptas?</a>
+        <p style="color: #555; font-size: 0.8em; margin-top: 15px;">(Toca la pantalla para escuchar 🎶)</p>
+        <a href="#" class="boton" onclick="alert('¡Sabía que dirías que sí! ❤️')">¿Me aceptas?</a>
     </div>
 
     <script>
         function crearCorazonFondo() {
             const corazon = document.createElement('div');
             corazon.classList.add('corazon');
-            corazon.innerHTML = Math.random() < 0.5 ? '❤️' : '💖';
+            corazon.innerHTML = Math.random() < 0.5 ? '❤️' : '💕';
             corazon.style.left = Math.random() * 100 + 'vw';
-            let tamano = Math.random() * 50 + 10; 
-            corazon.style.fontSize = tamano + 'px';
-            let duracion = Math.random() * 3 + 3;
-            corazon.style.animationDuration = duracion + 's';
-            if (tamano < 20) { corazon.style.opacity = 0.5; corazon.style.filter = "blur(1px)"; } else { corazon.style.opacity = 0.9; }
+            corazon.style.fontSize = (Math.random() * 30 + 10) + 'px';
+            corazon.style.animationDuration = (Math.random() * 3 + 3) + 's';
             document.body.appendChild(corazon);
             setTimeout(() => { corazon.remove(); }, 6000);
         }
-        setInterval(crearCorazonFondo, 150);
+        setInterval(crearCorazonFondo, 200);
 
         function crearExplosion(e) {
-            const cantidad = 15;
-            for (let i = 0; i < cantidad; i++) {
-                const particula = document.createElement('div');
-                particula.classList.add('particula');
-                particula.innerHTML = '💘';
-                particula.style.fontSize = '30px';
-                particula.style.left = e.clientX + 'px';
-                particula.style.top = e.clientY + 'px';
-                const x = (Math.random() - 0.5) * 200 + 'px';
-                const y = (Math.random() - 0.5) * 200 + 'px';
-                particula.style.setProperty('--x', x);
-                particula.style.setProperty('--y', y);
-                document.body.appendChild(particula);
-                setTimeout(() => { particula.remove(); }, 1000);
-            }
-        }
-
-        let musicaSonando = false;
-        function reproducirMusica() {
-            if (!musicaSonando) {
-                const audio = document.getElementById('musica');
-                audio.volume = 0.5;
-                audio.play().catch(error => { console.log("Click necesario"); });
-                musicaSonando = true;
-            }
-        }
-    </script>
-</body>
-</html>
+            for (let i = 0; i < 10; i++) {
+                const p = document.createElement('div');
+                p.classList.add('particula');
+                p.innerHTML = '💖';
+                p.style.left = e.clientX + 'px';
+                p.style.top = e.clientY + 'px';
