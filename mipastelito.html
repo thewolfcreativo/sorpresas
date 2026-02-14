@@ -7,56 +7,82 @@
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300&display=swap" rel="stylesheet">
     <style>
         body { 
-            margin: 0; padding: 0; 
+            margin: 0; 
+            padding: 0; 
             background: linear-gradient(to bottom, #ff9a9e, #fecfef); 
-            height: 100vh; overflow: hidden; 
+            height: 100vh; 
+            overflow: hidden; 
             font-family: 'Montserrat', sans-serif; 
             cursor: pointer; 
+            /* Asegura que el cuerpo ocupe todo y permita clicks */
+            position: relative;
         }
 
-        /* ESTO ASEGURA QUE EL TEXTO SE VEA SIEMPRE AL FRENTE */
+        /* CAPA DEL TEXTO - ESTA ES LA CAJA QUE FALTABA */
         .contenedor {
             position: absolute;
-            top: 50%; left: 50%;
+            top: 50%;
+            left: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
-            z-index: 9999 !important; /* Prioridad máxima */
+            z-index: 99999 !important; /* Prioridad ABSOLUTA */
             width: 90%;
-            background: rgba(255, 255, 255, 0.3); /* Fondo semitransparente para que se lea mejor */
-            padding: 20px;
+            max-width: 400px; /* Para que no se estire mucho en PC */
+            background: rgba(255, 255, 255, 0.25); /* Fondo semitransparente */
+            padding: 25px;
             border-radius: 20px;
-            backdrop-filter: blur(2px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            backdrop-filter: blur(4px); /* Efecto cristal */
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.18);
         }
 
         h1 {
             font-family: 'Great Vibes', cursive;
             color: #d63384;
-            font-size: 3.5rem;
-            margin: 10px 0;
-            text-shadow: 2px 2px 0px white;
-            animation: latidoTexto 2s infinite;
+            font-size: 3.8rem; /* Un poco más grande */
+            margin: 15px 0;
+            text-shadow: 2px 2px 2px rgba(255, 255, 255, 0.8);
+            animation: latidoTexto 1.5s infinite;
+            line-height: 1.2;
         }
 
         h2 {
-            color: #444; font-size: 1.1rem; margin-bottom: 5px;
-            background: white; display: inline-block;
-            padding: 5px 15px; border-radius: 15px;
+            color: #444;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            background: rgba(255,255,255,0.8);
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 15px;
         }
 
         .boton {
-            background: #fff; color: #d63384; border: 2px solid #d63384;
-            padding: 12px 30px; border-radius: 50px; font-size: 1.2rem;
-            text-decoration: none; display: inline-block; font-weight: bold;
-            margin-top: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            background: #fff;
+            color: #d63384;
+            border: 2px solid #d63384;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: bold;
+            margin-top: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
         }
+        
+        .boton:active { transform: scale(0.95); }
 
+        /* ANIMACIONES */
         @keyframes latidoTexto { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
         
-        .corazon { position: absolute; bottom: -50px; pointer-events: none; animation: flotar linear forwards; z-index: 1; }
+        /* CORAZONES FONDO */
+        .corazon { position: absolute; bottom: -10vh; pointer-events: none; animation: flotar linear forwards; z-index: 1; opacity: 0.7; }
+        
+        /* CORAZONES EXPLOSIÓN */
         .particula { position: absolute; pointer-events: none; animation: explosion 1s ease-out forwards; z-index: 9999; }
         
-        @keyframes flotar { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; } }
+        @keyframes flotar { 0% { transform: translateY(0) rotate(0deg); opacity: 0.8; } 100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; } }
         @keyframes explosion { 0% { transform: translate(0, 0) scale(1); opacity: 1; } 100% { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; } }
     </style>
 </head>
@@ -68,28 +94,61 @@
 
     <div class="contenedor">
         <h2>Un regalo especial para...</h2>
+        
         <h1>MI PASTELITO</h1>
-        <p style="color: #555; font-size: 0.8em; margin-top: 15px;">(Toca la pantalla para escuchar 🎶)</p>
-        <a href="#" class="boton" onclick="alert('¡Sabía que dirías que sí! ❤️')">¿Me aceptas?</a>
+        
+        <p style="color: #666; font-size: 0.85em; margin-top: 15px;">(Toca la pantalla para escuchar la música 🎶)</p>
+        <a href="#" class="boton" onclick="alert('¡Sabía que dirías que sí! ❤️ Te amo.')">¿Me aceptas?</a>
     </div>
 
     <script>
+        // Lluvia de corazones
         function crearCorazonFondo() {
             const corazon = document.createElement('div');
             corazon.classList.add('corazon');
-            corazon.innerHTML = Math.random() < 0.5 ? '❤️' : '💕';
+            corazon.innerHTML = Math.random() < 0.5 ? '❤️' : '💖';
             corazon.style.left = Math.random() * 100 + 'vw';
-            corazon.style.fontSize = (Math.random() * 30 + 10) + 'px';
-            corazon.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            corazon.style.fontSize = (Math.random() * 35 + 15) + 'px';
+            let duracion = Math.random() * 4 + 4;
+            corazon.style.animationDuration = duracion + 's';
             document.body.appendChild(corazon);
-            setTimeout(() => { corazon.remove(); }, 6000);
+            setTimeout(() => { corazon.remove(); }, duracion * 1000);
         }
-        setInterval(crearCorazonFondo, 200);
+        setInterval(crearCorazonFondo, 300);
 
+        // Explosión al clic
         function crearExplosion(e) {
-            for (let i = 0; i < 10; i++) {
+            // Reproducir música al primer clic si no suena
+            reproducirMusica();
+            
+            for (let i = 0; i < 12; i++) {
                 const p = document.createElement('div');
                 p.classList.add('particula');
-                p.innerHTML = '💖';
+                p.innerHTML = ['💘', '💝', '💖'][Math.floor(Math.random() * 3)];
                 p.style.left = e.clientX + 'px';
                 p.style.top = e.clientY + 'px';
+                p.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                const x = (Math.random() - 0.5) * 200 + 'px';
+                const y = (Math.random() - 0.5) * 200 + 'px';
+                p.style.setProperty('--x', x);
+                p.style.setProperty('--y', y);
+                document.body.appendChild(p);
+                setTimeout(() => { p.remove(); }, 1000);
+            }
+        }
+
+        // Música
+        let sonando = false;
+        function reproducirMusica() {
+            if (!sonando) {
+                const audio = document.getElementById('musica');
+                audio.play().then(() => {
+                    sonando = true;
+                }).catch(error => {
+                    console.log("Esperando interacción para reproducir");
+                });
+            }
+        }
+    </script>
+</body>
+</html>
